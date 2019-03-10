@@ -1,0 +1,18 @@
+/*
+CSS Name: Default Styles
+Description: NextGEN Default Gallery Stylesheet
+Author: Photocrati Media
+Version: 2.12
+
+This stylesheet is provided to allow users the ability of overriding the default styles for all display types
+*/
+.ngg-album-compactbox:before {
+border: none !important;
+}
+.ngg-album-compactbox:after {
+border: none !important;
+}
+.ngg-album-compactbox {
+border: none !important;
+padding: 0 !important;
+}

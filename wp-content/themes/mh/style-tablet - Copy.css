@@ -1,0 +1,149 @@
+@charset "utf-8";
+/* CSS Document */
+body {
+	font-size: 16px;
+}
+#hdr {
+	width: 100%;
+	background-size: auto 100%;
+	background-position: 0 0;
+	background-color: #c6935c;
+	height: 92px;
+}
+#ctnr {
+	width: auto;
+	box-shadow: none;
+}
+#logo {
+	margin: 4px 0 0 12px;
+	max-width: 248px;
+}
+#dnte {
+  margin: 16px 24px 0 0;
+}
+#navp #srch {
+	display: none;
+}
+#sld {
+	height: auto;
+	width: auto;
+	padding: 24px 16px;
+}
+#sld .cycle-slide {
+	width: auto;
+}
+#sld .sld_ctnt .mid {
+	display: block;
+	height: auto;
+	padding: 8px 16px 10px;
+	vertical-align: middle;
+}
+#sbar {
+	width: auto;
+	display: block;
+	padding: 30px 16px 1px;
+}
+#ctnt {
+	width: auto;
+	display: table-header-group;
+}
+#navp ul#menu-main-nav > li > a {
+	font-size: 14px;
+	padding: 0 11px 0 9px;
+}
+#navp ul.sub-menu li a {
+	font-size: 14px;
+}
+#content {
+	padding: 16px 16px 8px;
+}
+#content a {
+	display: inline-block;
+}
+#content img {
+	max-width: 516px;
+	width: 100%;
+	height: auto;
+}
+/*sidebar*/
+#sbar .navs, #sbar .widget_black_studio_tinymce, #sbar .widget_categories, #sbar .widget_wysiwyg_widgets_widget {
+	padding-bottom: 10px;
+	border-bottom: 4px solid #d5d1cd;
+	margin-bottom: 12px;
+	font-size: inherit;
+}
+#sbar .navs:last-child, #sbar .navs:only-child {
+	border-bottom: none;
+}
+#sbar .navs li, #sbar .widget_black_studio_tinymce li, #sbar .widget_categories li {
+	background-position: 0 6px;
+	background-size: 10px 14px;
+	padding-left: 18px;
+}
+#sbar .navs li a, #sbar .widget_black_studio_tinymce li a, #sbar .widget_categories li a {
+	font-size: inherit;
+}
+#sbar h4.widget-title, #sbar .textwidget h4, #sbar .textwidget h4 a {
+	font-size: inherit;
+}
+#ftr {
+	padding: 38px 24px 12px;
+	font-size: 18px;
+}
+#info {
+	overflow: hidden;
+	margin-bottom: 8px;
+	font-size: inherit;
+	line-height: 17px;
+}
+#info li {
+	float: none;
+	display: block;
+	line-height: 1.3em;
+	margin-bottom: 1em;
+	padding: 0;
+	border-right: none;
+}
+#info li#gmap {
+	display: block;
+}
+#info li span {
+	font-weight: 700;
+	display: inline-block;
+	width: 20px;
+}
+#info li#addr span {
+	font-weight: 400;
+	display: block;
+	width: auto;
+}
+#info li#addr span:before {
+	content: '';
+}
+#info li i {
+	display: inline-block;
+	width: 20px;
+	padding-right: 5px;
+}
+#scl li a {
+	background-size: contain;
+	height: 40px;
+	width: 40px;
+}
+#msthd {
+	font-size: inherit;
+	border-top: 4px solid #a39d94;
+	padding-top: 32px;
+}
+#msthd li {
+	float: none;
+	display: block;
+	line-height: 1.1em;
+	padding: 0;
+	margin-bottom: 1em;
+}
+#msthd li:last-child {
+	font-size: 75.0%;
+	text-transform: uppercase;
+	font-weight: 600;
+}
