@@ -41,41 +41,23 @@ function mh_scripts_styles() {
 	global $wp_version;
 	
 	// Load Reset css
-	wp_enqueue_style( 'reset-style', get_stylesheet_directory_uri() . '/cssreset-min.css', false, '3.14.1' );
+	wp_enqueue_style( 'style-cssreset', get_theme_file_uri( 'cssreset-min.css' ), false, '3.14.1' );
 
 	// Load Google Fonts
 	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Serif:400,700|Noto+Sans:400,700' );
 			
 	// Load font awesome
-	wp_enqueue_script(
-		'fopnt-awesome-script',
-		'https://use.fontawesome.com/ef737c0805.js'
-	);
+	wp_enqueue_script( 'font-awesome-script', 'https://use.fontawesome.com/ef737c0805.js' );
 	
 	// Loads superfish scrips and styles for dropdown menus
-	wp_enqueue_style( 
-		'superfish-style', 
-		get_stylesheet_directory_uri() . '/css/superfish.css'
-	);		
-	wp_enqueue_script(
-		'superfish-script',
-		get_stylesheet_directory_uri() . '/js/superfish.min.js',
-		array('jquery', 'jquery-ui-core')
-	);
+	wp_enqueue_style( 'superfish-style', get_stylesheet_directory_uri() . '/css/superfish.css' );		
+	wp_enqueue_script( 'superfish-script', get_stylesheet_directory_uri() . '/js/superfish.min.js',	array('jquery', 'jquery-ui-core')	);
 			
 	// Load jCycle 2
-	wp_enqueue_script(
-		'jcycle2-script',
-		'//malsup.github.io/min/jquery.cycle2.min.js',
-		array('jquery'),
-		'2.1.6'
-	);
+	wp_enqueue_script( 'jcycle2-script', '//malsup.github.io/min/jquery.cycle2.min.js',	array('jquery'), '2.1.6' );
 	
 	// UI Theme
-	wp_enqueue_style( 
-		'jquery-ui-style', 
-		get_stylesheet_directory_uri() . '/css/jquery-ui.min.css'
-	);
+	//wp_enqueue_style( 'jquery-ui-style', get_stylesheet_directory_uri() . '/css/jquery-ui.min.css' );
 	
 	// Load youtube popup on desktop
 	if ( wpmd_is_notphone() ) :
@@ -92,19 +74,28 @@ function mh_main_scripts_styles() {
 	global $wp_version, $post;
 	
 	// Load main scripts
-	wp_enqueue_script( 'main-scripts', get_stylesheet_directory_uri() . '/js/scripts.js', array('jquery'), $wp_version.'.20131107' );
+	wp_enqueue_script( 'scripts', get_theme_file_uri( 'js/scripts.js?'.filemtime( get_stylesheet_directory().'/js/scripts.js' ) ), array('jquery'), get_bloginfo('version'), true );
 	
 	// Load main stylesheet
-	wp_enqueue_style( 'main-style', get_stylesheet_directory_uri() . '/style.css', false, $wp_version.'.20170822' );
+	wp_enqueue_style( 'style', get_stylesheet_uri().'?'.filemtime( get_stylesheet_directory().'/style.css' ) );
 	
 	// Load tablet stylesheet
-	wp_enqueue_style( 'tablet-style', get_stylesheet_directory_uri() . '/style-tablet.css', array('main-style'), $wp_version.'.20170822', 'only screen and (max-width: 1020px)' );
+	wp_enqueue_style( 'style-tablet', get_theme_file_uri( 'style-tablet.css?'.filemtime( get_stylesheet_directory().'/style-tablet.css' ) ), array('style'), get_bloginfo('version'), 'only screen and (max-width: 1020px)' );
 
-		// Load mobile stylesheet
-		wp_enqueue_style( 'mobile-style', get_stylesheet_directory_uri() . '/style-mobile.css', array('main-style'), $wp_version.'.20170822', 'only screen and (max-width: 782px)' );
+	wp_enqueue_style( 'style-mobile', get_theme_file_uri( 'style-mobile.css?'.filemtime( get_stylesheet_directory().'/style-mobile.css' ) ), array('style'), get_bloginfo('version'), 'only screen and (max-width: 782px)' );
 	
 }
 add_action( 'wp_enqueue_scripts', 'mh_main_scripts_styles', 999 );
+
+// Add this into the iframe of gravity forms newsletter
+add_action('gfiframe_head', function () {
+	?>
+	<link rel="stylesheet" id="style-css"  href="<?php echo get_stylesheet_uri().'?'.filemtime( get_stylesheet_directory().'/style.css' ).'&ver='.get_bloginfo('version'); ?>" type="text/css" media="all" />
+	<link rel="stylesheet" id="style-tablet-css"  href="<?php echo get_theme_file_uri( 'style-tablet.css?'.filemtime( get_stylesheet_directory().'/style-tablet.css' ).'&ver='.get_bloginfo('version') ); ?>" type="text/css" media="only screen and (max-width: 971px)" />
+	<link rel="stylesheet" id="style-mobile-css"  href="<?php echo get_theme_file_uri( 'style-mobile.css?'.filemtime( get_stylesheet_directory().'/style-mobile.css' ).'&ver='.get_bloginfo('version') ); ?>" type="text/css" media="only screen and (max-width: 781px)" />
+	<style>html{background:#c9c2b8}</style>
+<?php 
+}, -1000);
 
 // Register sidebars
 function mh_widgets_init() {
@@ -169,41 +160,15 @@ function stc_get_content($content_id) {
   switch ($content_id) {
 
     case 9776:
-      $url = "https://us15.campaign-archive.com/feed?u=cfdcccc39d0e14f773117132c&id=c4b81c4480";
-
-      $rss = new DOMDocument();
-      $rss->load($url);
-      $feed = array();
-      foreach ($rss->getElementsByTagName('item') as $node) {
-          $item = array ( 
-              'title' => $node->getElementsByTagName('title')->item(0)->nodeValue,
-              'desc' => $node->getElementsByTagName('description')->item(0)->nodeValue,
-              'link' => $node->getElementsByTagName('link')->item(0)->nodeValue,
-              'date' => $node->getElementsByTagName('pubDate')->item(0)->nodeValue,
-              );
-          array_push($feed, $item);
-      }
-      $limit = 1;
-      for($x=0;$x<$limit;$x++) {
-          $title = str_replace(' & ', ' &amp; ', $feed[$x]['title']);
-          $link = $feed[$x]['link'];
-          $description = $feed[$x]['desc'];
-          $tags = array('html','head','meta','!doctype','body');
-          foreach($tags as $tag) {
-            $description = preg_replace("/<\\/?" . $tag . "(.|\\s)*?>/", '', $description);
-          }
-          $date = date('l F d, Y', strtotime($feed[$x]['date']));
-          echo '<p><strong>'.$title.'</strong><br />';
-          echo '<small><em>Posted on '.$date.'</em></small></p>';
-          echo $description;
-      }
-      ?>
-      <style type="text/css">
-        table.mcnTextContentContainer, table.mcnTextBlock, table#canspamBarWrapper {
-          display: none;
-        }
-      </style>
-      <?php
+			?>
+			<style type="text/css">
+			<!--
+			.display_archive {font-family: arial,verdana; font-size: 12px;}
+			.campaign {line-height: 125%; margin: 5px;}
+			//-->
+			</style>
+			<script language="javascript" src="//MissionHospice.us15.list-manage.com/generate-js/?u=cfdcccc39d0e14f773117132c&fid=6649&show=10000" type="text/javascript"></script>
+			<?
     break;
 
   } //
@@ -376,6 +341,41 @@ class GF_Init {
 	
 	// These functions will run on the client side
 	public function gf_wp_functions() {
+		
+		// for ready classes Section columns - https://www.jordancrown.com/blog/multi-column-gravity-forms/
+		//add_filter('gform_field_content', 'stc_gform_column_splits', 10, 5);
+		function stc_gform_column_splits($content, $field, $value, $lead_id, $form_id) {
+			if(IS_ADMIN) return $content; // only modify HTML on the front end
+
+			$form = RGFormsModel::get_form_meta($form_id, true);
+			$form_class = array_key_exists('cssClass', $form) ? $form['cssClass'] : '';
+			$form_classes = preg_split('/[\n\r\t ]+/', $form_class, -1, PREG_SPLIT_NO_EMPTY);
+			$fields_class = array_key_exists('cssClass', $field) ? $field['cssClass'] : '';
+			$field_classes = preg_split('/[\n\r\t ]+/', $fields_class, -1, PREG_SPLIT_NO_EMPTY);
+
+			// multi-column form functionality
+			if($field['type'] == 'section') {
+
+			// check for the presence of multi-column form classes
+			//$form_class_matches = array_intersect($form_classes, array('two-column', 'three-column'));
+
+			// check for the presence of section break column classes
+			$field_class_matches = array_intersect($field_class, array('gf_break_2col', 'gf_break_3col'));
+
+			// if field is a column break in a multi-column form, perform the list split
+			//if(!empty($form_class_matches) && !empty($field_class_matches)) { // make sure to target only multi-column forms
+			if(!empty($field_class_matches)) { // make sure to target only multi-column forms
+
+			// retrieve the form's field list classes for consistency
+			$ul_classes = GFCommon::get_ul_classes($form).' '.$field['cssClass'];
+
+			// close current field's li and ul and begin a new list with the same form field list classes
+			return '
+			<ul class="'.$ul_classes.'">
+				<li class="gfield gsection empty">';}
+			}
+			return $content;
+		}
 
     // Move GF scripts to the footer
     add_filter( 'gform_init_scripts_footer', '__return_true' );
@@ -666,7 +666,54 @@ class GF_Init {
 
 			}	
 			return $form;
-		}
+		} //
+		
+		add_filter("gform_pre_render_18", "mh_guest_meal_options_18_22");
+		function mh_guest_meal_options_18_22($form){
+			if (!IS_ADMIN) {
+				$current_page = GFFormDisplay::get_current_page($form["id"]);
+			}
+			// Start page 2
+			if ($current_page == 2) {
+				$list_field_id = 22;
+				switch (rgpost('input_3')) {
+					case "1|150":
+						$input_html_id = '#input_18_4';
+						break;
+					case "10|1500":
+						$input_html_id = '#choice_18_3_1';
+						break;
+					case "2|1000":
+						$input_html_id = '#choice_18_3_2';
+						break;
+					case "4|2500":
+						$input_html_id = '#choice_18_3_3';
+						break;
+					case "10.1|5000":
+						$input_html_id = '#choice_18_3_4';
+						break;
+					case "10.2|10000":
+						$input_html_id = '#choice_18_3_5';
+						break;
+					case "20|25000":
+						$input_html_id = '#choice_18_3_6';
+						break;
+				}
+						?>
+
+						<style type="text/css"> #field_<?php echo $form['id']; ?>_<?php echo $list_field_id; ?> .gfield_list_icons { display: none; } </style>
+
+						<?php
+
+				new GWAutoListFieldRows( array( 
+					'form_id' => $form["id"],
+					'list_field_id' => $list_field_id,
+					'input_html_id' => $input_html_id
+				) );
+
+			}	
+			return $form;
+		} //
     
 		/*Meal Choices Forms*/
 		//This filter declaration targets the 2nd column of the field whose id is 22 in form whose id is 10
@@ -729,6 +776,16 @@ class GF_Init {
 				return array("type" => "select", "choices" => "Chicken Florentine, Braised Beef Short Ribs, Mushroom Risotto (V GF)");
 			}
 		}
+		//This filter declaration targets the 2nd column of the field whose id is 22 in form whose id is 18
+		add_filter("gform_column_input_18_22_2", "change_column2_content_18_22_2", 10, 5);
+		function change_column2_content_18_22_2($input_info, $field, $text, $value, $form_id){
+			//build field name, must match List field syntax to be processed correctly
+			if (!IS_ADMIN) {
+				$input_field_name = 'input_' . $field["id"] . '[]';
+				$tabindex = GFCommon::get_tabindex();
+				return array("type" => "select", "choices" => "Greek Lemon Chicken, Braised Beef Short Ribs, Mushroom Risotto (V GF)");
+			}
+		}
 		/*end Meal Choices*/
 		
 		// displays the product label instead of the value in the order summary (everywhere the order summary is displayed)
@@ -759,11 +816,12 @@ class GF_Init {
 					return $value;
 		}
 		
-	}
+	} // public
 	
 	// These functions will run in the admin side
-	public function gf_admin_init_functions() { 
-	}
+	public function gf_admin_init_functions() { 		
+		
+	} // admin
 	
 }
 GF_Init::get_gf_instance();

@@ -127,7 +127,7 @@ img.alignleft, img.alignright {
 	}
 }
 #sbar {
-	padding: 30px 16px 1px
+	padding: 30px 14px 1px
 }
 #ctnt {
 	display: table-header-group
@@ -149,7 +149,7 @@ img.alignleft, img.alignright {
 #sld .sld_ctnt .mid {
 	display: block;
 	height: auto;
-	padding: 8px 16px 10px;
+	padding: 8px 14px 10px;
 	vertical-align: middle
 }
 #sld .sld_ctnt p {
@@ -160,7 +160,7 @@ img.alignleft, img.alignright {
 	font-size: 94.4%
 }
 #content {
-	padding: 16px 16px 8px
+	padding: 14px 14px 8px
 }
 #content a {
 	display: inline-block
@@ -227,7 +227,7 @@ img.alignleft, img.alignright {
 	width: 114px
 }
 #staff li .txt {
-	padding-left: 16px
+	padding-left: 14px
 }
 #story li {
 	float: none;
@@ -282,26 +282,6 @@ img.alignleft, img.alignright {
 .gform_wrapper span.ginput_total {
 	color: #000!important
 }
-.gform_wrapper .ginput_complex #input_7_2_4_container.ginput_right, .gform_wrapper .ginput_complex #input_7_2_5_container.ginput_left {
-	float: none;
-	width: 100%
-}
-#sig .gform_wrapper ul li.gfield {
-	margin: 0 0 8px 0;
-	padding-top: 0;
-	width: auto;
-	padding-right: 12px;
-}
-#sig .top_label div.ginput_complex.ginput_container.gf_name_has_1, #sig .top_label div.ginput_complex.ginput_container.gf_name_has_2, #sig .top_label div.ginput_complex.ginput_container.gf_name_has_3 {
-	padding-right: 0;
-	margin-bottom: -8px;
-}
-#sig .gform_wrapper div.ginput_container_name span {
-	padding-right: 0;
-}
-#sig .gform_wrapper ul.gform_fields li.gfield input[name="input_6"] {
-	width: 100%;
-}
 .ngg-imagebrowser {
 	max-width: 698px;
 	height: auto
@@ -348,22 +328,8 @@ img.alignleft, img.alignright {
 	padding: 2px 0px;
 }
 #ftr {
-	padding: 38px 24px 12px;
-	font-size: 18px
-}
-#sig .gform_wrapper ul.gform_fields li.gfield input[name="input_1.3"], #sig .gform_wrapper ul.gform_fields li.gfield input[name="input_1.6"], #sig .gform_wrapper ul.gform_fields li.gfield input[name="input_3"] {
-	width: 100%;
-}
-#sig .gform_wrapper ul li.gfield {
-	width: 100%;
-	padding-right: 0;
-}
-#sig .gform_wrapper .gform_body {
-	margin-bottom: 16px;
-}
-#sig .gform_wrapper .gform_body, #sig .gform_wrapper .gform_footer {
-	float: none;
-	width: 100%;
+	padding: 24px 14px 12px;
+	font-size: 18px;
 }
 #info, #msthd {
 	font-size: inherit

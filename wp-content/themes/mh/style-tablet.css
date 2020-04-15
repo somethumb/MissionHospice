@@ -101,3 +101,64 @@ body {
 	clear: both;
 	padding-top: 10px;
 }
+#sig iframe.gfiframe {
+	max-height: 100%;
+}
+.gform_wrapper .ginput_complex #input_7_2_4_container.ginput_right, .gform_wrapper .ginput_complex #input_7_2_5_container.ginput_left {
+	float: none;
+	width: 100%
+}
+#gform_wrapper_7.gform_wrapper ul li.gfield {
+	margin: 0 0 8px 0;
+	padding-top: 0;
+	width: auto;
+	padding-right: 12px;
+}
+#gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_1, #gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_2, #gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_3 {
+	padding-right: 0;
+	margin-bottom: -8px;
+}
+#gform_wrapper_7.gform_wrapper div.ginput_container_name span {
+	padding-right: 0;
+}
+#gform_wrapper_7.gform_wrapper ul.gform_fields li.gfield input[name="input_6"] {
+	width: 100%;
+}
+#gform_wrapper_7.gform_wrapper .field_sublabel_hidden_label .ginput_complex.ginput_container input[type="text"], #gform_wrapper_7.gform_wrapper .field_sublabel_hidden_label .ginput_complex.ginput_container select {
+	margin-bottom: 8px;
+}
+#gform_wrapper_7.gform_wrapper ul li.gfield#field_7_3, #gform_wrapper_7.gform_wrapper ul li.gfield#field_7_6 {
+	padding-right: 0;
+}
+#gform_wrapper_7.gform_wrapper .gform_heading {
+	font-size: 100%;
+}
+input:not([type="radio"]):not([type="checkbox"]) {
+    -webkit-appearance: none;
+		-webkit-border-radius: 0;
+    border-radius: 0;
+}
+#gform_wrapper_7.gform_wrapper ul.gform_fields li.gfield input[name="input_1.3"], #gform_wrapper_7.gform_wrapper ul.gform_fields li.gfield input[name="input_1.6"], #gform_wrapper_7.gform_wrapper ul.gform_fields li.gfield input[name="input_3"] {
+	width: 100%;
+}
+#gform_wrapper_7.gform_wrapper ul li.gfield {
+	width: 100%;
+	padding-right: 0;
+}
+#gform_wrapper_7.gform_wrapper ul.gform_fields li.gfield input {
+	padding: 3px 8px;
+	font-size: 87.5%;
+}
+#gform_wrapper_7.gform_wrapper .gform_body {
+	margin-bottom: 14px;
+}
+#gform_wrapper_7.gform_wrapper .gform_body, #gform_wrapper_7.gform_wrapper .gform_footer {
+	float: none;
+	width: 100%;
+}
+ div.ginput_complex.ginput_container.gf_name_has_2 span {
+  width: 100% !important;
+ }
+#gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_1, #gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_2, #gform_wrapper_7 .top_label div.ginput_complex.ginput_container.gf_name_has_3 {
+	width: 100%;
+}
