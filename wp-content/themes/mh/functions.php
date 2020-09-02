@@ -18,6 +18,15 @@ function mh_setup() {
 
 	// Add Featured Image support
 	add_theme_support( 'post-thumbnails' );
+	
+	// Add logo support
+	add_theme_support( 'custom-logo', array(
+		'width'       => 462,
+		'height'      => 140,
+		'flex-height' => true,
+		'flex-width'  => true,
+		'header-text' => array( 'site-title', 'site-description' ),
+	) );
 
 	// Add Custom Header
 	$args = array(
@@ -41,33 +50,44 @@ function mh_scripts_styles() {
 	global $wp_version;
 	
 	// Load Reset css
-	wp_enqueue_style( 'style-cssreset', get_theme_file_uri( 'cssreset-min.css' ), false, '3.14.1' );
+	wp_enqueue_style( 'style-cssreset', 'https://cdn.jsdelivr.net/gh/somethumb/cssreset@5.7.2/cssreset.css' );
 
 	// Load Google Fonts
-	wp_enqueue_style( 'google-fonts', '//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Serif:400,700|Noto+Sans:400,700' );
+	wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Serif:400,700|Noto+Sans:400,700' );
 			
 	// Load font awesome
 	wp_enqueue_script( 'font-awesome-script', 'https://use.fontawesome.com/ef737c0805.js' );
 	
 	// Loads superfish scrips and styles for dropdown menus
-	wp_enqueue_style( 'superfish-style', get_stylesheet_directory_uri() . '/css/superfish.css' );		
-	wp_enqueue_script( 'superfish-script', get_stylesheet_directory_uri() . '/js/superfish.min.js',	array('jquery', 'jquery-ui-core')	);
+	wp_enqueue_style( 'superfish-style', get_theme_file_uri('css/superfish.css') );		
+	wp_enqueue_script( 'superfish-script', 'https://cdn.jsdelivr.net/npm/superfish@1.7.10/dist/js/superfish.min.js',	array('jquery', 'jquery-ui-core')	);
 			
 	// Load jCycle 2
-	wp_enqueue_script( 'jcycle2-script', '//malsup.github.io/min/jquery.cycle2.min.js',	array('jquery'), '2.1.6' );
+	wp_enqueue_script( 'jcycle2-script', 'https://cdn.jsdelivr.net/npm/jquery.cycle2@2.1.7/src/jquery.cycle2.min.js',	array('jquery') );
 	
 	// UI Theme
 	//wp_enqueue_style( 'jquery-ui-style', get_stylesheet_directory_uri() . '/css/jquery-ui.min.css' );
 	
 	// Load youtube popup on desktop
 	if ( wpmd_is_notphone() ) :
-		wp_enqueue_style( 'youtubepopup-style', get_stylesheet_directory_uri() . '/css/YouTubePopUp.css', false, $wp_version );
-		wp_enqueue_script( 'youtubepopup-script', get_stylesheet_directory_uri() . '/js/jquery.youtubepopup.min.js', array('jquery', 'jquery-ui-dialog'), '2.4' );
+		wp_enqueue_style( 'youtubepopup-style', get_theme_file_uri('css/YouTubePopUp.css') );
+		wp_enqueue_script( 'youtubepopup-script', get_theme_file_uri('js/jquery.youtubepopup.min.js'), array('jquery', 'jquery-ui-dialog') );
 		wp_add_inline_script( 'youtubepopup-script', 'jQuery(function () {"use strict";	if (jQuery("a.youtube")[0]) { jQuery("a.youtube").YouTubePopUp(); } });' );
 	endif;
 		
 }
 add_action( 'wp_enqueue_scripts', 'mh_scripts_styles' );
+
+// Remove the CSS for All-In-One Calendar on all pages except events
+add_action( 'wp', 'stc_get_queried_object' );
+function stc_get_queried_object() {
+	$get_queried_object = get_queried_object();
+	if ($get_queried_object->post_type == 'ai1ec_event') {
+		return true;
+	} else {
+		return wp_dequeue_style( 'ai1ec_style' );
+	}
+} //
 
 // Enqueue main styles at highest priority for front-end.
 function mh_main_scripts_styles() {
@@ -86,6 +106,78 @@ function mh_main_scripts_styles() {
 	
 }
 add_action( 'wp_enqueue_scripts', 'mh_main_scripts_styles', 999 );
+
+// Login Logo
+class LOGIN_Init { 
+	
+	private static $instance;
+
+	public static function get_login_instance() {
+		return null === self::$instance ? ( self::$instance = new self ) : self::$instance;
+	}
+
+	public function __construct() {
+		add_action( 'init', array( $this, 'login_init_functions' ) );
+	}
+	
+	public function login_init_functions() {
+    /* Login Logo */
+    
+    // Load login stylesheet
+    function stc_login_scripts_styles() {
+		
+			// Load Fonts
+			wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700|Noto+Serif:400,700|Noto+Sans:400,700' );
+			
+			// Load Style
+      wp_enqueue_style( 'style-login', get_theme_file_uri( 'style-login.css?'.filemtime( get_stylesheet_directory().'/style-login.css' ) ) );  
+    }
+    add_action( 'login_enqueue_scripts', 'stc_login_scripts_styles' );
+    
+    // Load logo logo
+    function stc_login_logo() {
+      if ( has_custom_logo() ) :
+        $image = wp_get_attachment_image_src( get_theme_mod( 'custom_logo' ), 'full' );
+				$imagew = ($image[1] > 320) ? 300 : $image[1];
+        ?>
+        <style type="text/css">
+        #login h1 a {
+          background-image: url(<?php echo esc_url( $image[0] ); ?>);
+          background-size: contain;
+          background-repeat: no-repeat;
+					background-position: top center;
+          max-width: <?=$imagew?>px;
+          width: 100%;
+          height: <?php echo ceil(($image[2]/$image[1]) * $imagew); ?>px;
+        }
+				#login a:focus {
+					-webkit-box-shadow: none;
+					-moz-box-shadow: none;
+					-ms-box-shadow: none;
+					box-shadow: none;
+				}
+        </style>
+        <?php
+      endif;
+    }
+    add_filter( 'login_head', 'stc_login_logo' );
+    
+    // Login logo URL
+    function stc_login_headerurl() {
+        return home_url();
+    }
+    add_filter( 'login_headerurl', 'stc_login_headerurl' );
+    
+    // Login logo title
+    function stc_login_headertext() {
+        return get_bloginfo('name');
+    }
+    add_filter( 'login_headertext', 'stc_login_headertext' );
+	}
+	
+}
+LOGIN_Init::get_login_instance();
+/* END LOGIN Functions */	
 
 // Add this into the iframe of gravity forms newsletter
 add_action('gfiframe_head', function () {
@@ -128,119 +220,237 @@ function remove_editor_quicktags( $settings, $id ){
     return $settings;
 }
 
-// Responsive embeded videos
-add_filter('embed_oembed_html', 'wrap_embed_with_div', 10, 3);
-function wrap_embed_with_div($html, $url, $attr) {
-	return "<div class=\"responsive-container\">".$html."</div>";
-}
+/* SITE functions */
+class SITE_Init { 
+	
+	/** @var object Class Instance */
+	private static $instance;
 
-// Change the length of the excerpt number of words, and link to more on the A1C events
-add_filter( 'excerpt_length', 'a1c_excerpt_length');
-function a1c_excerpt_length() {
-	if ( get_post_type() == 'ai1ec_event' )
-    return 25;
-}
-add_filter( 'excerpt_more', 'a1c_excerpt_more' );
-function a1c_excerpt_more() {
-  global $post;
-	if ( get_post_type() == 'ai1ec_event' )
-    return ' [<a href="'.get_permalink($post->ID).'">more</a>]';
-}
-
-// Add to content
-add_filter( 'the_content', 'stc_the_content_filter' );
-function stc_the_content_filter($content) {	
-  ob_start();
-  call_user_func('stc_get_content', get_the_ID());
-  return $content . ob_get_clean();
-} // END
-
-// Gets the content based the_content filter
-function stc_get_content($content_id) { 
-  switch ($content_id) {
-
-    case 9776:
-			?>
-			<style type="text/css">
-			<!--
-			.display_archive {font-family: arial,verdana; font-size: 12px;}
-			.campaign {line-height: 125%; margin: 5px;}
-			//-->
-			</style>
-			<script language="javascript" src="//MissionHospice.us15.list-manage.com/generate-js/?u=cfdcccc39d0e14f773117132c&fid=6649&show=10000" type="text/javascript"></script>
-			<?
-    break;
-
-  } //
-}
-
-function the_slideshow() {
-	global $post;
-	if( have_rows('slides') ) { 
-	$slides = get_field('slides');
-	$slide_count = count($slides);
-	if ($slide_count > 1) {
-		$randomslide =  array_rand($slides, $slide_count); 
-		shuffle($randomslide);
-	} else {
-		$randomslide = array_keys($slides);
-	}	 
-	?>
-	<div id="sld">
-		<?php if ( wpmd_is_notphone() ) : ?>
-			<div class="cycle-slideshow" data-cycle-slides="> div" data-cycle-timeout="6000" data-cycle-auto-height="container">
-				<?php foreach ($randomslide as $field):
-
-					// vars
-					$image = $slides[$field]['image'];
-					$testimonial = $slides[$field]['testimonial'];
-					$author = $slides[$field]['author'];
-
-					?>
-					<div class="sld_ctnr">
-						<?php if($image) { ?>
-						<img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $testimonial; ?>">
-						<div class="sld_ctnt"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
-						<?php } else { ?>
-						<div class="sld_ctnt full"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
-						<?php } ?>
-					</div>
-				<?php endforeach; ?>
-			</div>
-		<?php else : ?>
-			<?php foreach ($randomslide as $field):
-
-				// vars
-				$image = $slides[$field]['image'];
-				$testimonial = $slides[$field]['testimonial'];
-				$author = $slides[$field]['author'];
-
-				?>
-				<div class="sld_ctnr">
-					<?php if($image) { ?>
-					<img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $testimonial; ?>">
-					<div class="sld_ctnt"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
-					<?php } else { ?>
-					<div class="sld_ctnt full"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
-					<?php } ?>
-				</div>
-			<?php endforeach; ?>
-		<?php endif; ?>
-	</div> 
-	<?php 
+	/**
+	 * Get the class instance
+	 */
+	public static function get_site_instance() {
+		return null === self::$instance ? ( self::$instance = new self ) : self::$instance;
 	}
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		add_action( 'init', array( $this, 'site_wp_functions' ), 1 );
+		add_action( 'admin_init', array( $this, 'site_admin_init_functions' ) );
+	}
+	
+	// These functions will run on the client side
+	public function site_wp_functions() {
+    
+		// Add Employment list shortcode
+		add_shortcode( 'employment_list', 'stc_employment_list' );
+		function stc_employment_list() { 
+
+			//Reading posts for "Employment" post type;
+      $args = array(
+        'post_type' 	=> 'employment',
+        'post_status' => 'publish',
+        'orderby'			=> 'menu_order',
+				'meta_query' 	=> array(
+					array(
+						'key'     => 'date_filled',
+						'compare' => 'NOT EXISTS',
+					),
+				),
+        'order'				=> 'ASC',
+        'nopaging'		=> true,
+      );
+			$the_query = new WP_Query( $args );
+				
+				if( $the_query->have_posts() ):
+					
+					$job_app = '<div id="empl">';
+					
+					while( $the_query->have_posts() ) : $the_query->the_post();
+						
+						// Job Info
+						if( have_rows('job_information') ) :
+							while( have_rows('job_information') ) : the_row();
+								
+								$job_type_values = array();
+								$job_title = get_the_title();
+								$job_types = get_sub_field('job_type');
+
+								foreach( $job_types as $job_type ):
+									$job_type_values[] = $job_type['value'];
+								endforeach;
+				
+								$job_location = get_sub_field('job_location');
+
+							endwhile;
+							
+							$job_type_value = $job_type_values ? ' ('.implode(', ', $job_type_values).')' : '';
+				
+						endif;
+				
+						// Contact Info
+						if( have_rows('contact_information') ):
+							while( have_rows('contact_information') ) : the_row();
+
+							// Get sub value.
+							$contacts_title = get_sub_field('contacts_title');
+							$contacts_name = get_sub_field('contacts_name');
+
+							endwhile; // while( have_rows('contact_information') ) : the_row();
+						endif; //  have_rows('contact_information')
+				
+						$job_app .= '<dl>';
+						$job_app .= '<dt><strong>'.$job_title.'</strong>'.$job_type_value.'</dt>';
+						$job_app .= '<dd><strong>Location: </strong>'.$job_location.'<br><strong>Hiring Manager: </strong>'.$contacts_name.', '.$contacts_title.'<br><a href="'.get_permalink(11789).'?jobID='.get_the_id().'"><strong>Apply Now</strong></a></dd>';
+						$job_app .= '</dl>';
+				
+					endwhile; // while( $the_query->have_posts() ) : $the_query->the_post();
+					
+					$job_app .= '</div>';
+			
+					return $job_app;
+				
+				else : 
+					return '';
+				endif; // $the_query->have_posts()
+
+		} //
+
+		// Responsive embeded videos
+		add_filter('embed_oembed_html', 'wrap_embed_with_div', 10, 3);
+		function wrap_embed_with_div($html, $url, $attr) {
+			return "<div class=\"responsive-container\">".$html."</div>";
+		}
+
+		// Change the length of the excerpt number of words, and link to more on the A1C events
+		add_filter( 'excerpt_length', 'a1c_excerpt_length');
+		function a1c_excerpt_length() {
+			if ( get_post_type() == 'ai1ec_event' )
+				return 25;
+		}
+		add_filter( 'excerpt_more', 'a1c_excerpt_more' );
+		function a1c_excerpt_more() {
+			global $post;
+			if ( get_post_type() == 'ai1ec_event' )
+				return ' [<a href="'.get_permalink($post->ID).'">more</a>]';
+		}
+
+		// Add to content
+		add_filter( 'the_content', 'stc_the_content_filter' );
+		function stc_the_content_filter($content) {	
+			ob_start();
+			call_user_func('stc_get_content', get_the_ID());
+			return $content . ob_get_clean();
+		} // END
+
+		// Gets the content based the_content filter
+		function stc_get_content($content_id) { 
+			switch ($content_id) {
+
+				case 9776:
+					?>
+					<style type="text/css">
+					<!--
+					.display_archive {font-family: arial,verdana; font-size: 12px;}
+					.campaign {line-height: 125%; margin: 5px;}
+					//-->
+					</style>
+					<script language="javascript" src="//MissionHospice.us15.list-manage.com/generate-js/?u=cfdcccc39d0e14f773117132c&fid=6649&show=10000" type="text/javascript"></script>
+					<?
+				break;
+
+			} //
+		}
+    
+    add_filter( 'wp_lazy_loading_enabled', '__return_false' );
+
+		function the_slideshow() {
+			global $post;
+			if( have_rows('slides') ) { 
+			$slides = get_field('slides');
+			$slide_count = count($slides);
+			if ($slide_count > 1) {
+				$randomslide =  array_rand($slides, $slide_count); 
+				shuffle($randomslide);
+			} else {
+				$randomslide = array_keys($slides);
+			}	 
+			?>
+			<div id="sld">
+				<?php if ( wpmd_is_notphone() ) : ?>
+					<div class="cycle-slideshow" data-cycle-slides="> div" data-cycle-timeout="6000" data-cycle-auto-height="container">
+						<?php foreach ($randomslide as $field):
+
+							// vars
+							$image = $slides[$field]['image'];
+							$testimonial = $slides[$field]['testimonial'];
+							$author = $slides[$field]['author'];
+							?>
+							<div class="sld_ctnr">
+								<?php if($image) { ?>
+                <?=wp_get_attachment_image($image['ID'], 'Slideshow', false, array('alt' => $testimonial))?>
+								<div class="sld_ctnt"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
+								<?php } else { ?>
+								<div class="sld_ctnt full"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
+								<?php } ?>
+							</div>
+						<?php endforeach; ?>
+					</div>
+				<?php else : ?>
+					<?php foreach ($randomslide as $field):
+
+						// vars
+						$image = $slides[$field]['image'];
+						$testimonial = $slides[$field]['testimonial'];
+						$author = $slides[$field]['author'];
+
+						?>
+						<div class="sld_ctnr">
+							<?php if($image) { ?>
+							<img src="<?php echo $image['sizes']['large']; ?>" alt="<?php echo $testimonial; ?>">
+							<div class="sld_ctnt"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
+							<?php } else { ?>
+							<div class="sld_ctnt full"><div class="mid"><p><?php echo $testimonial; ?></p><cite><?php echo $author; ?></cite></div></div>
+							<?php } ?>
+						</div>
+					<?php endforeach; ?>
+				<?php endif; ?>
+			</div> 
+			<?php 
+			}
+		}
+		
+	} // client side functions
+	
+	// These functions will run in the admin side
+	public function site_admin_init_functions() {
+
+		// Remove content permissions box from Post Type
+		add_action( 'add_meta_boxes', function() {
+			remove_meta_box( 'members-cp', 'employment', 'advanced' );
+		}, 11 );
+
+		//Change title text for Board Members and Staff Members CPT
+		function mh_custom_admin_enter_title( $input ) {
+			global $post_type;
+
+			if ( is_admin() && ('board' == $post_type || 'staff' == $post_type) )
+				return __( 'Enter name here' );
+
+			if ( is_admin() && ('employment' == $post_type) )
+				return __( 'Enter Job Title' );
+
+			return $input;
+		}
+		add_filter( 'enter_title_here', 'mh_custom_admin_enter_title' );
+		
+	} // admin side functions
+	
 }
-
-//Change title text for Board Members and Staff Members CPT
-function mh_custom_admin_enter_title( $input ) {
-	global $post_type;
-
-	if ( is_admin() && ('board' == $post_type || 'staff' == $post_type) )
-		return __( 'Enter name here' );
-
-	return $input;
-}
-add_filter( 'enter_title_here', 'mh_custom_admin_enter_title' );
+SITE_Init::get_site_instance();
+/* END SITE Functions */
 
 // Display sub menu items of the wp_nav_menu - i.e. 'sub_menu' => true
 add_filter( 'wp_nav_menu_objects', 'mh_wp_nav_menu_objects_sub_menu', 10, 2 );
@@ -341,6 +551,134 @@ class GF_Init {
 	
 	// These functions will run on the client side
 	public function gf_wp_functions() {
+		
+		//Render the dropdown for the to: field (email address)
+    add_filter("gform_field_value_jobTitle", "stc_gform_field_value_jobTitle", 10, 3);
+    function stc_gform_field_value_jobTitle($value, $field, $name){
+			// Get job post id from query param
+      $jobID = $_GET["jobID"];
+			if ($jobID) {
+				// Job Info
+				if( have_rows('job_information', $jobID) ) :
+					while( have_rows('job_information', $jobID) ) : the_row();
+
+						$job_type_values = array();
+						$job_title = get_the_title($jobID);
+						$job_types = get_sub_field('job_type', $jobID);
+
+						foreach( $job_types as $job_type ):
+							$job_type_values[] = $job_type['value'];
+						endforeach;
+
+						$job_location = get_sub_field('job_location', $jobID);
+
+					endwhile;
+
+					$job_type_value = $job_type_values ? ' ('.implode(', ', $job_type_values).')' : '';
+
+				endif;
+      	return $job_title.$job_type_value.' - '.$job_location;
+			}		
+    } //
+		
+		// Before render, add the job information to the html field
+		add_filter( 'gform_field_content_21_69', 'stc_gform_field_content_21_69', 10, 5 );
+		function stc_gform_field_content_21_69( $content, $field, $value, $lead_id, $form_id ) {
+			if(IS_ADMIN) return $content; // only modify HTML on the front end
+			
+			if (!isset($_GET["jobID"])) return $content;
+			
+			// Get job post id from query param
+      $jobID = $_GET["jobID"];
+					
+					$job_app = '<div id="empl">';
+						
+						// Job Info
+						if( have_rows('job_information', $jobID) ) :
+							while( have_rows('job_information', $jobID) ) : the_row();
+								
+								$job_type_values = array();
+								$job_title = get_the_title($jobID);
+								$job_types = get_sub_field('job_type', $jobID);
+
+								foreach( $job_types as $job_type ):
+									$job_type_values[] = $job_type['value'];
+								endforeach;
+				
+								$job_location = get_sub_field('job_location', $jobID);
+
+							endwhile;
+							
+							$job_type_value = $job_type_values ? ' ('.implode(', ', $job_type_values).')' : '';
+				
+						endif;
+				
+						// Contact Info
+						if( have_rows('contact_information', $jobID) ):
+							while( have_rows('contact_information', $jobID) ) : the_row();
+
+							// Get sub value.
+							$contacts_title = get_sub_field('contacts_title', $jobID);
+							$contacts_name = get_sub_field('contacts_name', $jobID);
+
+							endwhile; // while( have_rows('contact_information') ) : the_row();
+						endif; //  have_rows('contact_information')
+				
+						$job_app .= '<dl>';
+						$job_app .= '<dt><strong>'.$job_title.'</strong>'.$job_type_value.'</dt>';
+						$job_app .= '<dd><strong>Location: </strong>'.$job_location.'<br><strong>Hiring Manager: </strong>'.$contacts_name.', '.$contacts_title.'</dd>';
+						$job_app .= '</dl>';
+					
+					$job_app .= '</div>';
+			
+					return $job_app;
+					$content .= 'Job Information';			
+			
+			return $content;
+		} //
+		
+		// Have to enable CC in the notifications
+		add_filter('gform_notification_enable_cc', 'stc_gform_notification_enable_cc', 10, 3 );
+		function stc_gform_notification_enable_cc( $enable, $notification, $form ){
+			return true;
+		} //
+		
+		// Submit to email address and name
+		add_action( 'gform_notification_21', 'stc_gform_notification_21', 10, 3 );
+    function stc_gform_notification_21($notification, $form, $entry){
+      $jobID = $_POST["input_73"];
+			if ($jobID) {
+				if ( $notification['name'] == 'Admin Notification' ) {
+					
+					// Contact Info
+						if( have_rows('contact_information', $jobID) ):
+							while( have_rows('contact_information', $jobID) ) : the_row();
+
+							// Get sub value.
+							$contacts_title = get_sub_field('contacts_title', $jobID);
+							$contacts_name = get_sub_field('contacts_name', $jobID);
+							$contacts_email = get_sub_field('contacts_email_address', $jobID);
+
+							endwhile; // while( have_rows('contact_information') ) : the_row();
+						endif; //  have_rows('contact_information')
+
+					$notification['cc'] = $contacts_email;
+				}
+			}
+			return $notification;
+    } //
+		
+		// Remove the jobID field from entry
+		add_filter( 'gform_entry_field_value', 'stc_gform_entry_field_value', 10, 4 );
+		function stc_gform_entry_field_value( $value, $field, $lead, $form ) {
+				return ($form['id'] == 21 && $field->id == 73) ? null :	$value;
+		} //
+		
+		// Hide jobID field from All Fields
+		add_filter( 'gform_merge_tag_filter', 'stc_filter_all_fields', 10, 6 );
+		function stc_filter_all_fields( $value, $merge_tag, $modifier, $field, $raw_value, $format ) {
+			return ( $merge_tag == 'all_fields' && $field->id == '73' && $field->type == 'hidden' ) ? false : $value;
+		} //
 		
 		// for ready classes Section columns - https://www.jordancrown.com/blog/multi-column-gravity-forms/
 		//add_filter('gform_field_content', 'stc_gform_column_splits', 10, 5);

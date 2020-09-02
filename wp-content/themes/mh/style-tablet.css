@@ -12,8 +12,7 @@ body {
 	width: 100%;
 	background-size: cover;
 	background-position: 30%;
-	background-color: #c6935c;
-	max-height: 110px
+	max-height: 120px
 }
 #ctnr {
 	box-shadow: none;

@@ -127,44 +127,32 @@ h2 {
 	box-shadow: 5px 0 5px -5px rgba(0,0,0,.2), -5px 0 5px -5px rgba(0,0,0,.2), 0 3px 3px 0 rgba(0,0,0,.1)
 }
 #hdr {
-	background-image: url(images/hdr.jpg);
-	background-color: #c75e28;
-	height: 120px
+	height: 120px;
 }
 #tgl {
 	background-color: none
 }
 #logo {
-	float: left;
 	margin: 8px 0 0 30px;
-	max-width: 279px;
-	width: 100%
+	float: left;
 }
 #logo a {
 	display: inline-block;
-	width: 100%;
-	font-size: 0;
-	line-height: 0;
-	vertical-align: middle;
-	background-size: 100%;
-	background-position: 50% 50%;
-	background-image: url(images/logo_mh.png)
 }
-#logo #logo-inner {
-	display: block;
-	height: 0;
-	padding-top: 31%
+#logo img {
+	max-width: 279px;
+	height: auto;
 }
 #dnte {
 	float: right;
-	margin: 15px 30px 0 0
+	margin: 15px 30px 0 0;
 }
 #dnte a, #news a, .gform_button, .gform_next_button, .gform_previous_button, div.form_saved_message div.form_saved_message_emailform form input[type="submit"] {
 	text-transform: uppercase;
 	background: #00a0af;
 	border: 2px solid #fff;
 	padding: 0 8px;
-	font-size: 15px;
+	font-size: 107.1%;
 	color: #fff;
 	display: block;
 	cursor: pointer;
@@ -179,6 +167,20 @@ h2 {
 	border: 2px solid #00a0af;
 	color: #00a0af;
 	text-decoration: none
+}
+#dnte a {
+	background: #d06f1a;
+	display: inline-block;
+	margin-left: 8px;
+}
+#dnte a:last-child {
+	background: #4ebfca;
+}
+#dnte a:active, #dnte a:hover {
+	border: 2px solid #fff;
+}
+#dnte a:last-child:hover {
+	background: #fff;
 }
 .gform_wrapper .gform_footer a.gform_save_link, .gform_wrapper .gform_page_footer a.gform_save_link {
 	line-height: 2em;
@@ -198,10 +200,9 @@ h2 {
 }
 #navt li.menu-item-61:hover {
 	background-color: #fff;
-	border: 2px solid #00a0af;
 }
 #navt a {
-	font-size: 13px;
+	font-size: 92.9%;
 	color: #000;
 	padding: 3px 6px 2px;
 	display: inline-block;
@@ -213,7 +214,7 @@ h2 {
 #navp {
 	background: #fff;
 	height: 40px;
-	border-bottom: 4px solid #74796d;
+	border-bottom: 4px solid #d06f1a;
 	z-index: 99
 }
 #navp ul#menu-main-nav {
@@ -225,7 +226,7 @@ h2 {
 	height: 29px
 }
 #navp ul#menu-main-nav>li>a {
-	font-size: 16px;
+	font-size: 114.3%;
 	font-weight: 600;
 	color: #000;
 	line-height: 18px;
@@ -254,7 +255,7 @@ h2 {
 }
 #navp ul.sub-menu li a {
 	white-space: nowrap;
-	font-size: 16px;
+	font-size: 114.3%;
 	font-weight: 400;
 	color: #000;
 	line-height: 37px;
@@ -284,7 +285,7 @@ li.menu-item.bold a {
 	border: 1px solid #b0b0b0;
 	width: 114px;
 	padding: 0 10px;
-	font-size: 12px;
+	font-size: 85.7%;
 	float: left;
 	height: auto;
 	line-height: 20px
@@ -309,7 +310,7 @@ li.menu-item.bold a {
 	display: table
 }
 #sbar {
-	width: 194px;
+	width: 226px;
 	padding: 30px 22px;
 	background: #f5f3f1
 }
@@ -318,7 +319,7 @@ li.menu-item.bold a {
 	padding: 0 0 22px
 }
 #sld, #sld .cycle-slide {
-	width: 724px
+	width: 100%
 }
 #content {
 	padding: 34px 42px
@@ -327,23 +328,23 @@ li.menu-item.bold a {
 	text-decoration: none
 }
 .home #content h2 {
-	font-size: 17px
+	font-size: 121.4%
 }
 #newsletters a, #sld .sld_ctnt p {
 	margin-bottom: .3em
 }
 #sld {
 	background: #d2eaec;
-	padding: 24px 30px;
-	height: 226px
+	padding: 30px;
+	height: auto
 }
 #sld .cycle-slideshow {
 	z-index: 1
 }
 #sld img {
 	float: right;
-	max-width: 300px;
-	height: auto
+	max-height: 226px;
+	width: auto
 }
 #sld .sld_ctnt {
 	float: left;
@@ -382,7 +383,7 @@ li.menu-item.bold a {
 	content: "\201D"
 }
 #sld .sld_ctnt cite {
-	font-size: 14px;
+	font-size: 100%;
 	color: #4a4a2f
 }
 #sld .sld_ctnt cite:before {
@@ -390,7 +391,7 @@ li.menu-item.bold a {
 }
 #newsletters h2 {
 	font-weight: 700;
-	font-size: 18px;
+	font-size: 128.6%;
 	color: #00a0af;
 	padding-bottom: 8px;
 	border-bottom: 4px solid #b2e2e7;
@@ -528,9 +529,9 @@ li.menu-item.bold a {
 }
 #sbar .navs, #sbar .widget_black_studio_tinymce, #sbar .widget_categories, #sbar .widget_nav_menu, #sbar .widget_wysiwyg_widgets_widget {
 	padding-bottom: 10px;
-	border-bottom: 4px solid #d5d1cd;
+	border-bottom: 4px solid #d06f1a;
 	margin-bottom: 12px;
-	font-size: 14px
+	font-size: 100%
 }
 #sbar .navs li, #sbar .widget_black_studio_tinymce li, #sbar .widget_categories li, #sbar .widget_nav_menu li {
 	margin-bottom: 1em;
@@ -548,7 +549,7 @@ li.menu-item.bold a {
 	margin: 0 0 1.1em
 }
 #sbar .navs li a, #sbar .widget_black_studio_tinymce li a, #sbar .widget_categories li a, #sbar .widget_nav_menu li a {
-	font-size: 14px;
+	font-size: 100%;
 	color: #000;
 	font-weight: 600
 }
@@ -557,7 +558,7 @@ li.menu-item.bold a {
 	text-decoration: none
 }
 #sbar .textwidget h4, #sbar .textwidget h4 a, #sbar h4.widget-title {
-	font-size: 14px;
+	font-size: 100%;
 	font-weight: 700;
 	margin: 0 0 .5em
 }
@@ -837,16 +838,21 @@ margin:0
 }
 .gform_wrapper li.gf_list_inline ul.gfield_checkbox li, .gform_wrapper li.gf_list_inline ul.gfield_radio li {
 	margin-right: 24px!important;
-	padding-left: 1px!important
+	padding-left: 1px!important;
+	vertical-align: top;
 }
 .gform_wrapper .gfield_checkbox li input, .gform_wrapper .gfield_checkbox li input[type=checkbox], .gform_wrapper .gfield_radio li input[type=radio] {
 	margin-top: 0px!important
+}
+.gform_wrapper .gfield_checkbox li input[type=checkbox], .gform_wrapper .gfield_radio li input[type=radio] {
+	margin-top: 4px !important;
+	vertical-align: top;
 }
 .gform_wrapper .gfield_checkbox li label, .gform_wrapper .gfield_radio li label {
 	margin-left: 6px!important
 }
 .gform_wrapper .gfield.gsection.h2 h2 {
-	font-size: 14px
+	font-size: 100%
 }
 .gform_wrapper span.ginput_total {
 	color: #000!important
@@ -868,6 +874,18 @@ margin:0
 }
 .gform_wrapper .chosen-container-single .chosen-single {
 	text-decoration: none!important
+}
+.gform_wrapper .field_description_below .gfield_consent_description, .gform_wrapper .gfield_consent_description {
+	font-size: .875em;
+	background-color: #efefef;
+}
+.gform_wrapper .field_description_below .gfield_consent_description ul li, .gform_wrapper .gfield_consent_description ul li {
+	list-style: disc !important;
+	margin-bottom: .25em;
+	line-height: 1.5em;
+}
+.gpnf-nested-entries {
+	width: 100%;
 }
 /*ready class*/
 .gform_wrapper.gf_section_2col_wrapper ul.gform_fields li.gsection.gf_break_2col {
@@ -963,7 +981,7 @@ margin:0
 	font-weight: 600;
 	padding: 16px 30px 16px 20px;
 	display: block;
-	font-size: 16px;
+	font-size: 114.3%;
 	line-height: 20px;
 	border-bottom: 1px solid #c89074;
 	text-decoration: none
@@ -997,12 +1015,35 @@ margin:0
 	-webkit-transition: opacity .25s linear;
 	transition: opacity .25s linear
 }
-#tribe-events-content.tribe-events-list {
-  padding: 1px 30px;
-}
-#tribe-events-content.tribe-events-single {
+#tribe-events .tribe-events-single, #tribe-events-content-wrapper, #tribe-events .tribe-events-organizer {
   padding: 30px;
 }
+
+
 .ai1ec-month-view .ai1ec-date .ai1ec-load-view {
 	color: #fff;
+}
+#empl dl {
+	line-height: 1.5em;
+	margin: 0 0 1.4em;
+}
+#empl dl dd {
+	font-size: 92.9%;
+	margin: 0;
+}
+.ai1ec-word-wrap.ai1ec-month-view .ai1ec-event {
+	border-bottom: 1px dotted #ddd;
+	height: auto;
+	overflow: visible;
+	padding-top: 1px;
+	padding-bottom: 2px;
+	white-space: normal;
+}
+.ai1ec-month-view .ai1ec-event, .ai1ec-week-view .ai1ec-event, .ai1ec-oneday-view .ai1ec-event {
+	height: auto;
+	white-space: normal;
+}
+.ai1ec-row {
+	/* margin-left: -15px; */
+	/* margin-right: -15px; */
 }

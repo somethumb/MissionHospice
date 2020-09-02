@@ -42,23 +42,17 @@ img.alignleft, img.alignright {
 }
 #hdr {
 	background-image: none!important;
-	background-color: #c75e28;
+	background-color: #d06f1a;
 	display: table
 }
 #logo {
 	flex: none;
-	padding: 2px 10px 10px 0;
-	float: none
+	padding: 2px 15px 10px 0;
+	float: none;
+	text-align: center;
 }
-#logo a {
-	background-image: url(images/logo_mh.png);
-	background-position: 50% 50%;
-	background-repeat: no-repeat;
-	background-size: 92% auto;
-	display: inline-block;
-	font-size: 0;
-	line-height: 0;
-	vertical-align: middle
+#logo img {
+	max-width: 240px;
 }
 #tgl {
 	padding: 0 7px 0 10px
@@ -84,16 +78,18 @@ img.alignleft, img.alignright {
 }
 #dntem {
 	border-top: 4px solid #fff;
-	background-image: url(images/hdr_mob.jpg);
-	background-position: 18% top;
-	background-size: auto 100%;
-	background-color: #f3b46f;
+	background-image: url(images/hdr_ial.png);
+	background-position: 12% 60%;
+	background-size: auto 66%;
+	background-color: #00a0af;
 	clear: both;
 	float: none;
-	min-height: 78px
+	min-height: 78px;
+	display: block;
+	width: 100%;
 }
 #dntem a {
-	background: #00a0af;
+	background: #d06f1a;
 	border: 1px solid #fff;
 	color: #fff;
 	cursor: pointer;
@@ -101,6 +97,12 @@ img.alignleft, img.alignright {
 	font-size: 83.3%;
 	margin: 23px 24px 0 0;
 	padding: 3px 8px
+}
+#dntem a:active, #dntem a:hover {
+	border: 2px solid #00a0af;
+	color: #00a0af;
+	text-decoration: none;
+	background: #fff;
 }
 #main {
 	width: 100%;
@@ -137,14 +139,17 @@ img.alignleft, img.alignright {
 	height: auto;
 	padding: 0
 }
+
 #sld img {
 	float: none;
 	width: 100%;
-	height: auto
+	height: auto;
+  max-height: 100%;
 }
 #sld .sld_ctnt {
 	float: none;
-	width: auto
+	width: auto;
+	max-width: none;
 }
 #sld .sld_ctnt .mid {
 	display: block;
